@@ -1,6 +1,7 @@
 /* ipdd2hex.c - converts IP address decimal dot notation to 
  * hexadecimal representation */
 #include <stdio.h>
+#include <netinet/in.h>
 #include <arpa/inet.h>
 
 int main(int argc, char **argv)
@@ -16,6 +17,6 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    printf("%#x\n", addr.s_addr);
+    printf("%#x\n", htonl(addr.s_addr));
     return 0;
 }
