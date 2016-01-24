@@ -3,7 +3,7 @@ CFLAGS=-std=c99 -pedantic -Wall -Werror
 all: ipdd2hex iphex2dd hostinfo echoclient
 
 clean:
-	rm ipdd2hex iphex2dd
+	rm ipdd2hex iphex2dd hostinfo echoclient
 
 .PHONY: all clean
 
