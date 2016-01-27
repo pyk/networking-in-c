@@ -3,7 +3,7 @@ CFLAGS=-std=c99 -pedantic -Wall -Werror
 all: ipdd2hex iphex2dd hostinfo echoclient
 
 clean:
-	rm ipdd2hex iphex2dd hostinfo echoclient
+	rm ipdd2hex iphex2dd hostinfo echoclient echoclient-module tcp.o
 
 .PHONY: all clean
 
@@ -18,3 +18,10 @@ hostinfo: hostinfo.c
 
 echoclient: echoclient.c
 	$(CC) $(CFLAGS) -o $@ $^
+
+tcp.o: tcp.c tcp.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+echoclient-module: echoclient-module.c tcp.o
+	$(CC) $(CFLAGS) -o $@ $^
+

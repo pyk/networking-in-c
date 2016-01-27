@@ -3,3 +3,6 @@ iphex2dd
 hostinfo
 echoserver
 echoclient
+echoclient-module
+a.out
+tcp.o
