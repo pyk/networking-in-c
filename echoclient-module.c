@@ -7,7 +7,7 @@
  * % make echoclient-module
  *
  * Usage:
- * % ./echoclient-module localhost:8080 hello
+ * % ./echoclient-module localhost 8080 hello
  *
  * License:
  * BSD 3-clause Revised
@@ -49,20 +49,20 @@
 
 int main(int argc, char **argv)
 {
-    if(argc != 3) {
-        fprintf(stderr, "Usage: %s host:port message\n", argv[0]);
+    if(argc != 4) {
+        fprintf(stderr, "Usage: %s host port message\n", argv[0]);
         return 1;
     }
 
-    int sockfd;
-    int retdial = tcpdial(&sockfd, argv[1]);
-    if(retdial != 0) {
-        fprintf(stderr, "error: dial\n");
+    int conn;
+    errno = tcpdial(&conn, argv[1], argv[2]);
+    if(errno != 0) {
+        fprintf(stderr, "error: %s\n", strerror(errno));
         return 1;
     }
 
     /* send message to a socket */
-    int retsend = send(sockfd, argv[2], strlen(argv[2]), MSG_DONTWAIT);
+    int retsend = send(conn, argv[3], strlen(argv[3]), MSG_DONTWAIT);
     if(retsend == -1) {
         fprintf(stderr, "error: %s\n", strerror(errno));
         return 1;
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 
     /* read a message from socket */
     char buf[100];
-    int retrecv = recv(sockfd, buf, 100, MSG_DONTWAIT);
+    int retrecv = recv(conn, buf, 100, MSG_DONTWAIT);
     if(retrecv == -1) {
         fprintf(stderr, "error: %s\n", strerror(errno));
         return 1;

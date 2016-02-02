@@ -31,17 +31,6 @@
 #ifndef TCP_H
 #define TCP_H
 
-/* The maximum length of TCP hostname are 253 ASCII characters; specified 
- * by RFC 952. */
-#define TCPHOSTLN 254
-
-/* TCP port is stored in 16-bit integer, the maximum value is 65535; 5
- * digit characters long. */
-#define TCPPORTLN 6
-
-int tcpsh(char *host, char addr[]);
-int tcpsp(char *port, int colon_i, char addr[]);
-int tcpsaddr(char *host, char *port, char addr[]);
-int tcpdial(int *sockfd, char addr[]);
+int tcpdial(int *conn, char host[], char port[]);
 
 #endif
