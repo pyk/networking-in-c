@@ -1,6 +1,6 @@
 CFLAGS=-std=c99 -pedantic -Wall -Werror
 
-all: ipdd2hex iphex2dd hostinfo echoclient
+all: ipdd2hex iphex2dd hostinfo echoclient echoclient-module
 
 clean:
 	rm ipdd2hex iphex2dd hostinfo echoclient echoclient-module tcp.o
