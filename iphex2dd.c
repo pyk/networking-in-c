@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     }
 
     /* Convert hexadecimal to integer */
-    int input;
+    unsigned int input;
     if(sscanf(argv[1], "%x", &input) == EOF) {
         fprintf(stderr, "Error: %s\n", strerror(errno));
         return 1;
