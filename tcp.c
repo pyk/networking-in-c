@@ -78,9 +78,9 @@
  *
  * Example
  *     int conn;
- *     errno = tcpdial(&conn, "localhost", "9090");
- *     if(errno != 0) {
- *         fprintf(stderr, "error: %s\n", strerror(errno));
+ *     int errdial = tcpdial(&conn, "localhost", "9090");
+ *     if(errdial != 0) {
+ *         fprintf(stderr, "E: tcpdial %s\n", strerror(errdial));
  *     }
  */
 int tcpdial(int *conn, char host[], char port[])
@@ -110,20 +110,21 @@ int tcpdial(int *conn, char host[], char port[])
         switch(errno) {
             case EAI_AGAIN:
                 errno = ENETUNREACH;
-                return errno;
+                break;
             case EAI_FAIL:
                 errno = ENETDOWN;
-                return errno;
+                break;
             case EAI_MEMORY:
                 errno = ENOMEM;
-                return errno;
+                break;
             case EAI_NONAME:
             case EAI_SERVICE:
                 errno = EINVAL;
-                return errno;
+                break;
             default:
-                return errno;
+                break;
         }
+        return errno;
     }
 
     /* iterate over returned address & test the connection for each address */
@@ -132,7 +133,7 @@ int tcpdial(int *conn, char host[], char port[])
         /* try connect to a socket address; conforming to POSIX.1-2001 */
         int retcon = connect(*conn, addri->ai_addr, addri->ai_addrlen);
         if(retcon != 0) {
-            /* Continue until we can connect to the address */
+            /* continue until we can connect to the address */
             continue;
         }
         break;
